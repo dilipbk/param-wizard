@@ -43,12 +43,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/andrii-kavka/param-wizard.git"
+    "url": "git+https://github.com/dilipbk/param-wizard.git"
   },
   "bugs": {
-    "url": "https://github.com/andrii-kavka/param-wizard/issues"
+    "url": "https://github.com/dilipbk/param-wizard/issues"
   },
-  "homepage": "https://github.com/andrii-kavka/param-wizard#readme",
+  "homepage": "https://github.com/dilipbk/param-wizard#readme",
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
