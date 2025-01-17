@@ -55,7 +55,10 @@ export const validateParams = (
   params: Record<string, QueryValue>,
   rules: ValidationRules
 ): boolean => {
-  for (const [key, rule] of Object.entries(rules)) {
+  for (const [key, rule] of Object.entries(rules) as [
+    string,
+    ValidationRule
+  ][]) {
     const value = params[key];
 
     if (rule.required && (value === undefined || value === null)) {
@@ -97,7 +100,8 @@ export const setSearchParams = (params: URLSearchParams): void => {
   window.history.pushState({}, "", newUrl);
 
   // Execute middleware
-  URLMiddlewareManager.execute(Object.fromEntries(params.entries()));
+  const entries = Array.from(params as URLSearchParams) as [string, string][];
+  URLMiddlewareManager.execute(Object.fromEntries(entries));
 
   // Notify subscribers
   URLSubscriber.notify();
@@ -135,7 +139,8 @@ export const updateQueries = (updates: QueryUpdate[]): void => {
 export const updateQueryString = (query: string = ""): void => {
   const newParams = getSearchParams();
   const newQuery = new URLSearchParams(query);
-  const key_value_query = Object.fromEntries(newQuery.entries());
+  const entries = Array.from(newQuery as URLSearchParams) as [string, string][];
+  const key_value_query = Object.fromEntries(entries);
 
   Object.keys(key_value_query)?.forEach((key) => {
     if (key_value_query[key] !== null && key_value_query[key] !== undefined) {
@@ -167,8 +172,11 @@ export const clearAllQuery = (): void => {
   setSearchParams(new URLSearchParams());
 };
 
-export const getParams = (): Record<string, string> =>
-  Object.fromEntries(getSearchParams().entries());
+export const getParams = (): Record<string, string> => {
+  const params = getSearchParams();
+  const entries = Array.from(params as URLSearchParams) as [string, string][];
+  return Object.fromEntries(entries);
+};
 
 export const getParamString = (): string => getSearchParams().toString();
 
@@ -330,7 +338,10 @@ export class URLPresets {
     const preset = this.presets[name];
     if (preset) {
       updateQueries(
-        Object.entries(preset).map(([key, value]) => ({ key, value }))
+        Object.entries(preset).map(([key, value]: [string, any]) => ({
+          key,
+          value,
+        }))
       );
     }
   }
