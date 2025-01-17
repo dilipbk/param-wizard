@@ -230,7 +230,9 @@ export const updateQueryArray = (key: string, values: string[]): void => {
 export const getParamArray = (key: string): string[] => {
   const value = getSearchParams().get(key);
   if (!value) return [];
-  return decodeValue(value) as string[];
+  const decoded = decodeValue(value);
+  if (!Array.isArray(decoded)) return [decoded];
+  return decoded as string[];
 };
 
 // Type-safe parameter getter
