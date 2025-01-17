@@ -1,6 +1,6 @@
 {
   "name": "param-wizard",
-  "version": "1.0.4",
+  "version": "1.0.0",
   "description": "A utility package for handling URL query parameters in the browser",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

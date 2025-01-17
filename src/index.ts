@@ -97,7 +97,12 @@ export const setSearchParams = (params: URLSearchParams): void => {
   const newUrl = `${window.location.pathname}${
     params.toString() ? "?" + params.toString() : ""
   }`;
-  window.history.pushState({}, "", newUrl);
+  // Use replaceState instead of pushState to prevent adding to browser history
+  window.history.replaceState(
+    { params: Object.fromEntries(params.entries()) },
+    "",
+    newUrl
+  );
 
   // Execute middleware
   const entries = Array.from(params as URLSearchParams) as [string, string][];
@@ -231,8 +236,7 @@ export const getParamArray = (key: string): string[] => {
   const value = getSearchParams().get(key);
   if (!value) return [];
   const decoded = decodeValue(value);
-  if (!Array.isArray(decoded)) return [decoded];
-  return decoded as string[];
+  return Array.isArray(decoded) ? decoded : [decoded];
 };
 
 // Type-safe parameter getter
@@ -257,35 +261,63 @@ interface HistoryState {
 }
 
 export class URLHistory {
-  private stack: HistoryState[] = [];
-  private currentIndex = -1;
+  private static instance: URLHistory;
+  private initialized = false;
 
-  push(state: Partial<HistoryState> = {}): void {
-    this.stack = this.stack.slice(0, this.currentIndex + 1);
-    this.stack.push({
-      data: state.data || {},
-      title: state.title || document.title,
-      url: state.url || window.location.href,
+  constructor() {
+    if (URLHistory.instance) {
+      return URLHistory.instance;
+    }
+    URLHistory.instance = this;
+    this.initialize();
+  }
+
+  private initialize(): void {
+    if (this.initialized) return;
+
+    window.addEventListener("popstate", (event) => {
+      event.preventDefault();
+
+      // Get state from history or current URL
+      const state = event.state?.params || {};
+      const params = new URLSearchParams(state);
+
+      // Update URL without triggering new history entry
+      window.history.replaceState(
+        { params: state },
+        "",
+        `${window.location.pathname}${
+          params.toString() ? "?" + params.toString() : ""
+        }`
+      );
+
+      // Notify subscribers
+      URLSubscriber.notify();
     });
-    this.currentIndex++;
+
+    this.initialized = true;
   }
 
   back(): void {
-    if (this.currentIndex > 0) {
-      this.currentIndex--;
-      this.applyState(this.stack[this.currentIndex]);
-    }
+    window.history.back();
   }
 
   forward(): void {
-    if (this.currentIndex < this.stack.length - 1) {
-      this.currentIndex++;
-      this.applyState(this.stack[this.currentIndex]);
-    }
+    window.history.forward();
   }
 
-  private applyState(state: HistoryState): void {
-    window.history.pushState(state.data, state.title, state.url);
+  push(state: Partial<HistoryState> = {}): void {
+    const params = getSearchParams();
+    const currentState = {
+      params: Object.fromEntries(params.entries()),
+      ...state.data,
+    };
+
+    window.history.pushState(
+      currentState,
+      state.title || document.title,
+      state.url || window.location.href
+    );
   }
 }
 
