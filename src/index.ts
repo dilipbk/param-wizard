@@ -41,7 +41,7 @@ const validateInput = ({ key, value }: QueryUpdate): boolean => {
 
 export const encodeValue = (value: QueryValue): string => {
   if (Array.isArray(value)) {
-    return value.map((v) => encodeURIComponent(String(v))).join(",");
+    return encodeURIComponent(value.join(","));
   }
   return encodeURIComponent(String(value));
 };
