@@ -1,6 +1,6 @@
 {
   "name": "param-wizard",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A utility package for handling URL query parameters in the browser",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -21,10 +21,19 @@
     "lint": "tsc"
   },
   "keywords": [
+    "param-wizard",
+    "query params",
+    "param",
+    "params",
+    "wizard",
+    "query parser",
     "url",
     "query",
-    "params",
-    "browser"
+    "browser",
+    "wizard",
+    "react",
+    "javascript",
+    "typescript"
   ],
   "author": "Dilip BK",
   "license": "MIT",
