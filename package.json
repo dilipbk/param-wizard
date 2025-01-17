@@ -18,10 +18,7 @@
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts",
     "prepublishOnly": "npm run build",
-    "lint": "tsc",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "lint": "tsc"
   },
   "keywords": [
     "url",
@@ -29,15 +26,9 @@
     "params",
     "browser"
   ],
-  "author": "Your Name",
+  "author": "Dilip BK",
   "license": "MIT",
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@types/jest": "^29.5.5",
-    "@types/testing-library__jest-dom": "^5.14.9",
-    "jest": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0",
-    "ts-jest": "^29.1.1",
     "tsup": "^7.2.0",
     "typescript": "^4.9.0"
   },
@@ -48,9 +39,5 @@
   "bugs": {
     "url": "https://github.com/dilipbk/param-wizard/issues"
   },
-  "homepage": "https://github.com/dilipbk/param-wizard#readme",
-  "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  }
+  "homepage": "https://github.com/dilipbk/param-wizard#readme"
 }
