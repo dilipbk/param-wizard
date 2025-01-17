@@ -49,9 +49,6 @@
     "url": "https://github.com/andrii-kavka/param-wizard/issues"
   },
   "homepage": "https://github.com/andrii-kavka/param-wizard#readme",
-  "publishConfig": {
-    "access": "public"
-  },
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
