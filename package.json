@@ -1,5 +1,5 @@
 {
-  "name": "param-wizard",
+  "name": "params-wizard",
   "version": "1.0.0",
   "description": "A utility package for handling URL query parameters in the browser",
   "main": "./dist/index.js",
@@ -22,6 +22,8 @@
   },
   "keywords": [
     "param-wizard",
+    "params-wizard",
+    "params wizard",
     "query params",
     "param",
     "params",
@@ -30,7 +32,6 @@
     "url",
     "query",
     "browser",
-    "wizard",
     "react",
     "javascript",
     "typescript"
@@ -43,10 +44,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dilipbk/param-wizard.git"
+    "url": "git+https://github.com/dilipbk/params-wizard.git"
   },
   "bugs": {
-    "url": "https://github.com/dilipbk/param-wizard/issues"
+    "url": "https://github.com/dilipbk/params-wizard/issues"
   },
-  "homepage": "https://github.com/dilipbk/param-wizard#readme"
+  "homepage": "https://github.com/dilipbk/params-wizard#readme"
 }

@@ -1,4 +1,4 @@
-# Param Wizard
+# Params Wizard
 
 A powerful and type-safe utility package for managing URL query parameters in browser applications.
 
@@ -47,11 +47,24 @@ A powerful and type-safe utility package for managing URL query parameters in br
 
 #### URLHistory
 
-| Method    | Parameters                                     | Return | Description          |
-| --------- | ---------------------------------------------- | ------ | -------------------- |
-| `push`    | `{ data?: any, title?: string, url?: string }` | `void` | Save current state   |
-| `back`    | None                                           | `void` | Go to previous state |
-| `forward` | None                                           | `void` | Go to next state     |
+The URLHistory class implements a singleton pattern to manage browser history consistently.
+
+| Method        | Parameters                                     | Return       | Description                |
+| ------------- | ---------------------------------------------- | ------------ | -------------------------- |
+| `constructor` | None                                           | `URLHistory` | Returns singleton instance |
+| `push`        | `{ data?: any, title?: string, url?: string }` | `void`       | Push new state to history  |
+| `back`        | None                                           | `void`       | Go to previous state       |
+| `forward`     | None                                           | `void`       | Go to next state           |
+
+```typescript
+// Example usage
+const history = new URLHistory(); // Always returns the same instance
+history.push({
+  data: { view: "list" }, // Custom state data
+  title: "List View", // Optional page title
+  url: window.location.href, // Optional URL
+});
+```
 
 #### URLSubscriber
 
@@ -76,7 +89,7 @@ A powerful and type-safe utility package for managing URL query parameters in br
 ## Installation
 
 ```bash
-npm install param-wizard
+npm install params-wizard
 ```
 
 ## API Usage & Explanations
@@ -149,20 +162,20 @@ new URLTransaction()
 
 ### URL History Management
 
-Manage custom URL history states beyond browser's basic back/forward functionality.
+Manage browser history through a singleton instance that ensures consistent history management across your application.
 
 ```typescript
-const history = new URLHistory();
+const history = new URLHistory(); // Always returns the same instance
 
 // Save state with custom data
 history.push({
-  data: { lastFilter: "active" }, // Custom data
-  title: "Filtered View", // Page title
-  url: window.location.href, // URL to restore
+  data: { view: "list" }, // Custom state data
+  title: "List View", // Optional page title
+  url: window.location.href, // Optional URL
 });
 
-history.back(); // Go to previous saved state
-history.forward(); // Go to next saved state
+history.back(); // Go to previous state
+history.forward(); // Go to next state
 ```
 
 ### Change Subscriptions
