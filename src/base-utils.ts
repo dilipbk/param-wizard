@@ -8,18 +8,20 @@ export const getSearchParams = (): URLSearchParams =>
   new URLSearchParams(window.location.search);
 
 export const setSearchParams = (params: URLSearchParams): void => {
-  const newUrl = `${window.location.pathname}${
-    params.toString() ? "?" + params.toString() : ""
-  }`;
-  // Use replaceState instead of pushState to prevent adding to browser history
+  const queryString = Array.from(params.entries())
+    .map(([key, value]) => {
+      return `${encodeURIComponent(key)}=${value}`; // value is already encoded
+    })
+    .join("&");
+
   window.history.replaceState(
     { params: Object.fromEntries(params.entries()) },
     "",
-    newUrl
+    window.location.pathname + (queryString ? "?" + queryString : "")
   );
 
   // Execute middleware
-  const entries = Array.from(params as URLSearchParams) as [string, string][];
+  const entries = Array.from(params) as [string, string][];
   URLMiddlewareManager.execute(Object.fromEntries(entries));
 
   // Notify subscribers
@@ -108,6 +110,10 @@ export const getParamArray = (key: string): string[] => {
   if (!value) return [];
   const decoded = decodeValue(value);
   return Array.isArray(decoded) ? decoded : [decoded];
+};
+
+export const getParam = (key: string): string | null => {
+  return getSearchParams().get(key);
 };
 
 // Type-safe parameter getter

@@ -4,7 +4,9 @@ export const encodeValue = (value: QueryValue): string => {
   if (Array.isArray(value)) {
     return encodeURIComponent(value.join(","));
   }
-  return encodeURIComponent(String(value));
+
+  const decoded = decodeURIComponent(String(value));
+  return encodeURIComponent(decoded);
 };
 
 export const decodeValue = (value: string): string | string[] => {
