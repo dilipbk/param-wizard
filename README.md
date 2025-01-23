@@ -31,6 +31,7 @@ A powerful and type-safe utility package for managing URL query parameters in br
 | `validateParams`       | `params: Record<string, QueryValue>, rules: ValidationRules` | `ValidationRules = { pattern?: RegExp; minLength?: number; maxLength?: number; required?: boolean; enum?: string[]; }` | `boolean`                | Validate parameters              |
 | `serializeObject`      | `obj: Record<string, any>`                                   | -                                                                                                                      | `string`                 | Serialize complex object         |
 | `deserializeObject<T>` | `str: string`                                                | Type parameter `T`                                                                                                     | `T`                      | Deserialize with type safety     |
+| `getParam`             | `key: string`                                                | -                                                                                                                      | `string \| null`         | Get raw parameter value          |
 
 ### Classes
 
@@ -118,13 +119,16 @@ updateQueryString("?page=1&sort=desc");
 Built-in TypeScript support ensures you get the correct data types when retrieving parameters.
 
 ```typescript
+// Get raw parameter value
+getParam("page"); // returns "1" or null
+
 // Get all parameters as object
 getParams(); // { page: "1", sort: "desc" }
 
 // Get full query string
 getParamString(); // "page=1&sort=desc"
 
-// Get typed parameters (automatic type conversion)
+// Get typed parameters (with automatic type conversion)
 const page = getTypedParam<number>("page", 1); // returns number: 1
 const isActive = getTypedParam<boolean>("active", false); // returns boolean: true/false
 ```
